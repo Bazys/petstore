@@ -38,7 +38,9 @@ func Run(ctx context.Context, opts Options) error {
 		return err
 	}
 
-	r.Handle("/*", gw)
+	// r.Handle("/*", gw)
+	r.MethodNotAllowed(gw.ServeHTTP)
+	r.NotFound(gw.ServeHTTP)
 
 	// chi.Walk(r, func(method string, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
 	// 	fmt.Printf("[%s]: '%s' has %d middlewares\n", method, route, len(middlewares))
